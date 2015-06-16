@@ -27,7 +27,7 @@ public class PodcasterActivity extends ActionBarActivity {
         RssFeedParser parser = new RssFeedParser(this);
         RssFeed feed = null;
         try {
-            parser.execute("http://dumdumclub.libsyn.com/rss");
+            parser.execute("http://api.digitalpodcast.com/v2r/search/?appid=b5be1f305cecaf9fe99d60dd5c29946b&keywords=karl&format=opml&sort=rating&searchsource=title&contentfilter=noadult&start=0&results=10", "false");
 
         } finally {
             if (stream != null) {

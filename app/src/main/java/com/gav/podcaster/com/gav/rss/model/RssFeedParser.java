@@ -5,7 +5,6 @@ package com.gav.podcaster.com.gav.rss.model;
  */
 import android.os.AsyncTask;
 import android.util.Xml;
-import android.widget.ListView;
 import android.widget.TextView;
 
 
@@ -53,17 +52,56 @@ public class RssFeedParser extends AsyncTask<String, Void, RssFeed>{
         return conn.getInputStream();
     }
 
-    public RssFeed parse(InputStream in) throws XmlPullParserException, IOException {
+    public RssFeed parse(InputStream in, boolean feed) throws XmlPullParserException, IOException {
         try {
             XmlPullParser parser = Xml.newPullParser();
 
             parser.setFeature(XmlPullParser.FEATURE_PROCESS_NAMESPACES, false);
             parser.setInput(in, null);
             parser.nextTag();
-            return readFeed(parser);
+
+            if(feed)
+                return readFeed(parser);
+            else
+                return readResults(parser);
         } finally {
             in.close();
         }
+    }
+
+    private RssFeed readResults(XmlPullParser parser) throws XmlPullParserException, IOException {
+        RssFeed feed = new RssFeed("Search results", null, null, null, null, null);
+
+        RssMessage result = null;
+        parser.require(XmlPullParser.START_TAG, ns, "opml");
+        String name = null;
+        //continue to get the rest of the items
+        while (parser.next() != XmlPullParser.END_DOCUMENT) {
+            if (parser.getEventType() != XmlPullParser.START_TAG) {
+                continue;
+            }
+            name = parser.getName();
+            if (name.equals("body")) {
+                parser.require(XmlPullParser.START_TAG, ns, "body");
+                parser.next();
+                while(parser.getName() == null || !parser.getName().equals("body")) {
+                    if (parser.getEventType() != XmlPullParser.START_TAG) {
+                        parser.next();
+                        continue;
+                    }
+                    String resultName = parser.getAttributeValue(ns, "text");
+                    String resultUrl = parser.getAttributeValue(ns, "url");
+                    result = new RssMessage(resultName, null, resultUrl, null, null);
+                    feed.getMessages().add(result);
+                    parser.next();
+                }
+            }
+            else{
+                skip(parser);
+            }
+
+        }
+        return feed;
     }
 
     private RssFeed readFeed(XmlPullParser parser) throws XmlPullParserException, IOException {
@@ -222,7 +260,7 @@ public class RssFeedParser extends AsyncTask<String, Void, RssFeed>{
             throw new IllegalStateException();
         }
         String name = parser.getName();
-        if(!name.equals("channel")){
+        if(!name.equals("channel") ||!name.equals("head") || !name.equals("body")){
             int depth = 1;
             while (depth != 0) {
                 switch (parser.next()) {
@@ -242,9 +280,19 @@ public class RssFeedParser extends AsyncTask<String, Void, RssFeed>{
     @Override
     protected RssFeed doInBackground(String... params) {
         InputStream stream = null;
+        boolean feed = false;
+        if(params.length > 1){
+            if(params[1] == "true"){
+                feed = true;
+            }
+            else{
+                feed = false;
+            }
+        }
+
         try {
             stream = this.downloadUrl(params[0]);
-            return this.parse(stream);
+            return this.parse(stream, feed);
         } catch (XmlPullParserException e) {
             e.printStackTrace();
         } catch (IOException e) {

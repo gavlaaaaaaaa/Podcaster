@@ -69,8 +69,9 @@ public class RssFeedParser extends AsyncTask<String, Void, RssFeed>{
         }
     }
 
+    //parse search results when searching for podcasts through the api
     private RssFeed readResults(XmlPullParser parser) throws XmlPullParserException, IOException {
-        RssFeed feed = new RssFeed("Search results", null, null, null, null, null);
+        RssFeed feed = new RssFeed("Search results", null, null, null, null, null,null);
 
         RssMessage result = null;
         parser.require(XmlPullParser.START_TAG, ns, "opml");
@@ -91,7 +92,7 @@ public class RssFeedParser extends AsyncTask<String, Void, RssFeed>{
                     }
                     String resultName = parser.getAttributeValue(ns, "text");
                     String resultUrl = parser.getAttributeValue(ns, "url");
-                    result = new RssMessage(resultName, null, resultUrl, null, null);
+                    result = new RssMessage(resultName, null, resultUrl, null, null,null);
                     feed.getMessages().add(result);
                     parser.next();
                 }
@@ -104,6 +105,7 @@ public class RssFeedParser extends AsyncTask<String, Void, RssFeed>{
         return feed;
     }
 
+    //parse a feed for a -specific- podcast obtaining all of its available content
     private RssFeed readFeed(XmlPullParser parser) throws XmlPullParserException, IOException {
         RssFeed feed = null;
         parser.require(XmlPullParser.START_TAG, ns, "rss");
@@ -140,6 +142,7 @@ public class RssFeedParser extends AsyncTask<String, Void, RssFeed>{
         String language = null;
         String copyright = null;
         String pubdate = null;
+        String image = null;
         while (parser.next() != XmlPullParser.END_TAG) {
             if (parser.getEventType() != XmlPullParser.START_TAG) {
                 continue;
@@ -157,7 +160,7 @@ public class RssFeedParser extends AsyncTask<String, Void, RssFeed>{
                 skip(parser);
             }
         }
-        return new RssFeed(title, link, description, language, copyright, pubdate);
+        return new RssFeed(title, link, description, language, copyright, pubdate, image);
     }
 
     // Parses the contents of an entry. If it encounters a title, summary, or link tag, hands them off
@@ -169,6 +172,7 @@ public class RssFeedParser extends AsyncTask<String, Void, RssFeed>{
         String link = null;
         String guid = null;
         String enclosure = null;
+        String image = null;
         while (parser.next() != XmlPullParser.END_TAG) {
             if (parser.getEventType() != XmlPullParser.START_TAG) {
                 continue;
@@ -192,7 +196,7 @@ public class RssFeedParser extends AsyncTask<String, Void, RssFeed>{
             }
 
         }
-        return new RssMessage(title, description, link, guid, enclosure);
+        return new RssMessage(title, description, link, guid, enclosure, image);
     }
 
     // Processes title tags in the feed.
@@ -211,7 +215,7 @@ public class RssFeedParser extends AsyncTask<String, Void, RssFeed>{
         return link;
     }
 
-    // Processes summary tags in the feed.
+    // Processes discription tags in the feed.
     private String readDescription(XmlPullParser parser) throws IOException, XmlPullParserException {
         parser.require(XmlPullParser.START_TAG, ns, "description");
         String description = readText(parser);
@@ -219,6 +223,7 @@ public class RssFeedParser extends AsyncTask<String, Void, RssFeed>{
         return description;
     }
 
+    // Processes summary tags in the feed.
     private String readSummary(XmlPullParser parser) throws IOException, XmlPullParserException {
         parser.require(XmlPullParser.START_TAG, ns, "itunes:summary");
         String description = readText(parser);
@@ -284,9 +289,6 @@ public class RssFeedParser extends AsyncTask<String, Void, RssFeed>{
         if(params.length > 1){
             if(params[1] == "true"){
                 feed = true;
-            }
-            else{
-                feed = false;
             }
         }
 

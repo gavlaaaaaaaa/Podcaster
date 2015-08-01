@@ -9,12 +9,14 @@ import java.util.List;
  */
 public class RssFeed {
 
+    int id;
     final String title;
     final String link;
     final String description;
     final String language;
     final String copyright;
     final String pubDate;
+    final String image;
 
     final List<RssMessage> entries;
 
@@ -25,22 +27,34 @@ public class RssFeed {
         this.language = "";
         this.copyright = "";
         this.pubDate = "";
+        this.image = "";
+        this.id = -1;
         entries = new ArrayList<RssMessage>();
     }
 
     public RssFeed(String title, String link, String description, String language,
-                String copyright, String pubDate) {
+                String copyright, String pubDate, String image) {
+        this.id = -1;
         this.title = title;
         this.link = link;
         this.description = description;
         this.language = language;
         this.copyright = copyright;
         this.pubDate = pubDate;
+        this.image = image;
         entries = new ArrayList<RssMessage>();
     }
 
     public List<RssMessage> getMessages() {
         return entries;
+    }
+
+    public void setId (int id) {
+        this.id = id;
+    }
+
+    public int getId(){
+        return id;
     }
 
     public String getTitle() {
@@ -65,6 +79,10 @@ public class RssFeed {
 
     public String getPubDate() {
         return pubDate;
+    }
+
+    public String getImage() {
+        return image;
     }
 
     @Override

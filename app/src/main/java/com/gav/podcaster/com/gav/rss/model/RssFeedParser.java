@@ -4,10 +4,16 @@ package com.gav.podcaster.com.gav.rss.model;
  * Created by Gav on 11/06/15.
  */
 import android.os.AsyncTask;
+import android.support.annotation.UiThread;
 import android.util.Xml;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.GridView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 
+import com.gav.podcaster.PodcastItemAdapter;
 import com.gav.podcaster.PodcasterActivity;
 import com.gav.podcaster.R;
 
@@ -19,7 +25,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
-
+import java.util.ArrayList;
 
 
 public class RssFeedParser extends AsyncTask<String, Void, RssFeed>{
@@ -306,14 +312,35 @@ public class RssFeedParser extends AsyncTask<String, Void, RssFeed>{
     @Override
     protected void onPostExecute(RssFeed result){
         final RssFeed resultFeed = result;
+        final ArrayList<RssFeed> pods = new ArrayList<RssFeed>();
+        pods.add(resultFeed);
+        pods.add(resultFeed);
+        pods.add(resultFeed);
+        pods.add(resultFeed);
+        pods.add(resultFeed);
+        pods.add(resultFeed);
+        pods.add(resultFeed);
+        pods.add(resultFeed);
+        pods.add(resultFeed);
         activity.runOnUiThread(new Runnable() {
             public void run() {
+                /*
                 final TextView tv1 = (TextView) activity.findViewById(R.id.texview1);
                 tv1.setText(resultFeed.toString() + "\n\n");
                 for(RssMessage message : resultFeed.getMessages()) {
                     tv1.append(message.toString()+ "\n\n");
                 }
+                */
+                GridView gridview = (GridView) activity.findViewById(R.id.GRID_ID);
+                gridview.setAdapter(new PodcastItemAdapter(activity, pods));
 
+                gridview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                    public void onItemClick(AdapterView<?> parent, View v,
+                                            int position, long id) {
+                        Toast.makeText(activity, pods.get(position).toString(),
+                                Toast.LENGTH_SHORT).show();
+                    }
+                });
             }
         });
     }

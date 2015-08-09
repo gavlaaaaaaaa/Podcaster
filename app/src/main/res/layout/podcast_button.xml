@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:id="@+id/PODCAST_BTN"
+    android:padding="10dp"
+    tools:context=".PodcasterActivity">
+    <ImageView
+        android:id="@+id/PODCAST_BTN_IMAGE"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@android:drawable/ic_input_add"
+        android:layout_centerHorizontal="true"
+        />
+    <TextView
+        android:id="@+id/PODCAST_BTN_TEXT"
+        android:textAppearance="?android:attr/textAppearanceButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="some text"
+        android:padding="5dp"
+        android:layout_below="@+id/PODCAST_BTN_IMAGE"
+
+        />
+
+</RelativeLayout>

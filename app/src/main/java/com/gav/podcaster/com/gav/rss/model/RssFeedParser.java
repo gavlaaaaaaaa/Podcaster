@@ -311,7 +311,7 @@ public class RssFeedParser extends AsyncTask<String, Void, RssFeed>{
 
     @Override
     protected void onPostExecute(RssFeed result){
-        final RssFeed resultFeed = result;
+        /*final RssFeed resultFeed = result;
         final ArrayList<RssFeed> pods = new ArrayList<RssFeed>();
         pods.add(resultFeed);
         pods.add(resultFeed);
@@ -324,24 +324,16 @@ public class RssFeedParser extends AsyncTask<String, Void, RssFeed>{
         pods.add(resultFeed);
         activity.runOnUiThread(new Runnable() {
             public void run() {
-                /*
+
                 final TextView tv1 = (TextView) activity.findViewById(R.id.texview1);
                 tv1.setText(resultFeed.toString() + "\n\n");
                 for(RssMessage message : resultFeed.getMessages()) {
                     tv1.append(message.toString()+ "\n\n");
                 }
-                */
-                GridView gridview = (GridView) activity.findViewById(R.id.GRID_ID);
-                gridview.setAdapter(new PodcastItemAdapter(activity, pods));
 
-                gridview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                    public void onItemClick(AdapterView<?> parent, View v,
-                                            int position, long id) {
-                        Toast.makeText(activity, pods.get(position).toString(),
-                                Toast.LENGTH_SHORT).show();
-                    }
-                });
+
+
             }
-        });
+        });*/
     }
 }

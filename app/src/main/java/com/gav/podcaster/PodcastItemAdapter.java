@@ -1,15 +1,23 @@
 package com.gav.podcaster;
 
+import android.app.Activity;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
+import android.support.v7.internal.widget.AdapterViewCompat;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.GridView;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
+import android.widget.Toast;
+
 import com.gav.podcaster.com.gav.rss.model.RssFeed;
 
 import java.io.BufferedInputStream;
@@ -23,7 +31,7 @@ import java.util.List;
 /**
  * Created by Gav on 02/08/15.
  */
-public class PodcastItemAdapter extends BaseAdapter {
+public class PodcastItemAdapter extends BaseAdapter  {
 
     private Context mContext;
     private ArrayList<RssFeed> podcasts;
@@ -47,28 +55,32 @@ public class PodcastItemAdapter extends BaseAdapter {
         return podcasts.get(position).getId();
     }
 
-    public View getView(int position, View convertView, ViewGroup parent){
-        //change this if needed
-        ImageView imageView;
+    public View getView(int position, View podcastButtonView, ViewGroup parent){
+        // get current podcast
+        final RssFeed currPodcast = podcasts.get(position);
 
-        RssFeed currPodcast = podcasts.get(position);
+        if(podcastButtonView == null){
+            //if not recycled, initialize attributes and inflate podcastButtonView
+            LayoutInflater lInflater = (LayoutInflater)mContext.getSystemService(
+                    Activity.LAYOUT_INFLATER_SERVICE);
 
-        if(convertView == null){
-            //if not recycled, initialize attributes
-            imageView = new ImageView(mContext);
-            imageView.setLayoutParams(new GridView.LayoutParams(85,85));
-            imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
-            imageView.setPadding(8,8,8,8);
+            podcastButtonView = (RelativeLayout) lInflater.inflate(R.layout.podcast_button, null);
+
         }
         else {
-            imageView = (ImageView) convertView;
+            //recylced so just use the view
+            podcastButtonView = (RelativeLayout) podcastButtonView;
         }
 
+        //TODO: grab imageview object and set image based on currPodcast image
 
-        imageView.setImageDrawable(mContext.getResources().getDrawable(android.R.drawable.gallery_thumb));
+        // grab the text view object and set its text
+        TextView tv = (TextView) podcastButtonView.findViewById(R.id.PODCAST_BTN_TEXT);
+        tv.setText(currPodcast.getTitle());
 
-        return imageView;
+        return podcastButtonView;
     }
+
 
 
 

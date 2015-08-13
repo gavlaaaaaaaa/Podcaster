@@ -95,4 +95,9 @@ public class PodcasterActivity extends ActionBarActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    public void addPodcast(View v){
+        // write your code here ..
+        Toast.makeText(v.getContext(), "Add a podcast", Toast.LENGTH_SHORT).show();
+    }
+
 }

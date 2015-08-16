@@ -27,13 +27,13 @@
         android:text="Search Type"/>
 
     <Spinner
-        android:id="@+id/SRCHFRAG_ELV_SOURCE"
+        android:id="@+id/SRCHFRAG_SPIN_SOURCE"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/SRCHFRAG_ET_SEARCH"
         android:layout_toRightOf="@+id/SRCHFRAG_TV_SOURCE"
         android:layout_alignParentRight="true"
-        android:paddingTop="20dp"
+        android:layout_marginTop="20dp"
         android:textSize="18dp"
         android:text="10"
         />
@@ -49,11 +49,11 @@
         android:text="Sort By"/>
 
     <Spinner
-        android:id="@+id/SRCHFRAG_ELV_SORT"
+        android:id="@+id/SRCHFRAG_SPIN_SORT"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/SRCHFRAG_TV_SOURCE"
-        android:paddingTop="20dp"
+        android:layout_marginTop="20dp"
         android:layout_toRightOf="@+id/SRCHFRAG_TV_SORT"
         android:layout_alignParentRight="true"
         android:textSize="18dp"

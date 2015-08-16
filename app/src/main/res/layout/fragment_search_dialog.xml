@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingLeft="10dp"
+    android:paddingRight="10dp"
+    tools:context=".PodcasterSearchDialogFragment">
+
+    <EditText
+        android:id="@+id/SRCHFRAG_ET_SEARCH"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="20dp"
+        android:layout_marginTop="20dp"
+        android:hint="Search Keywords"/>
+
+    <TextView
+        android:id="@+id/SRCHFRAG_TV_SOURCE"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingTop="20dp"
+        android:paddingRight="50dp"
+        android:textSize="18dp"
+        android:layout_below="@+id/SRCHFRAG_ET_SEARCH"
+        android:text="Search Type"/>
+
+    <Spinner
+        android:id="@+id/SRCHFRAG_ELV_SOURCE"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/SRCHFRAG_ET_SEARCH"
+        android:layout_toRightOf="@+id/SRCHFRAG_TV_SOURCE"
+        android:layout_alignParentRight="true"
+        android:paddingTop="20dp"
+        android:textSize="18dp"
+        android:text="10"
+        />
+
+    <TextView
+        android:id="@+id/SRCHFRAG_TV_SORT"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingTop="20dp"
+        android:paddingRight="50dp"
+        android:textSize="18dp"
+        android:layout_below="@+id/SRCHFRAG_TV_SOURCE"
+        android:text="Sort By"/>
+
+    <Spinner
+        android:id="@+id/SRCHFRAG_ELV_SORT"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/SRCHFRAG_TV_SOURCE"
+        android:paddingTop="20dp"
+        android:layout_toRightOf="@+id/SRCHFRAG_TV_SORT"
+        android:layout_alignParentRight="true"
+        android:textSize="18dp"
+        android:text="10"
+        />
+
+    <TextView
+        android:id="@+id/SRCHFRAG_TV_NUM_RESULTS"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingTop="20dp"
+        android:paddingRight="50dp"
+        android:textSize="18dp"
+        android:layout_below="@+id/SRCHFRAG_TV_SORT"
+        android:text="Number of Results"/>
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/SRCHFRAG_TV_SORT"
+        android:layout_toRightOf="@+id/SRCHFRAG_TV_NUM_RESULTS"
+        android:paddingTop="20dp"
+        android:textSize="18dp"
+        android:text="10"
+        android:inputType="number"
+        />
+    
+
+    <TextView
+        android:id="@+id/SRCHFRAG_TV_FILTERS"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingTop="30dp"
+        android:paddingRight="50dp"
+        android:textSize="18dp"
+        android:layout_below="@+id/SRCHFRAG_TV_NUM_RESULTS"
+        android:text="Filters"/>
+
+    <CheckBox
+        android:id="@+id/SRCHFRAG_CHK_ADULT"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="No Adult Content"
+        android:textSize="18dp"
+        android:layout_marginTop="20dp"
+        android:layout_below="@+id/SRCHFRAG_TV_FILTERS"/>
+
+    <CheckBox
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="No Explicit Content"
+        android:textSize="18dp"
+        android:layout_marginTop="70dp"
+        android:layout_below="@+id/SRCHFRAG_TV_FILTERS"/>
+
+    <CheckBox
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Clean Content Only"
+        android:textSize="18dp"
+        android:layout_marginTop="120dp"
+        android:layout_below="@+id/SRCHFRAG_TV_FILTERS" />
+
+
+</RelativeLayout>

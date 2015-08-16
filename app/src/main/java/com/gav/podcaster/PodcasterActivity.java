@@ -1,7 +1,12 @@
 package com.gav.podcaster;
 
+import android.app.DialogFragment;
+import android.app.SearchManager;
+import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.SearchView;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -22,7 +27,7 @@ import java.util.ArrayList;
 import java.util.concurrent.ExecutionException;
 
 
-public class PodcasterActivity extends ActionBarActivity {
+public class PodcasterActivity extends AppCompatActivity  {
 
     private ArrayList<RssFeed> pods = new ArrayList<RssFeed>();
     @Override
@@ -77,6 +82,10 @@ public class PodcasterActivity extends ActionBarActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_podcaster, menu);
+        final SearchView searchView = (SearchView) MenuItemCompat.getActionView(menu.findItem(R.id.PODCAST_SEARCH));
+        SearchManager searchManager = (SearchManager) getSystemService(SEARCH_SERVICE);
+        searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
+
         return true;
     }
 
@@ -98,6 +107,9 @@ public class PodcasterActivity extends ActionBarActivity {
     public void addPodcast(View v){
         // write your code here ..
         Toast.makeText(v.getContext(), "Add a podcast", Toast.LENGTH_SHORT).show();
+        DialogFragment searchDialog = new PodcastSearchDialogFragment();
+        searchDialog.show(getFragmentManager(), "SearchFragment");
+
     }
 
 }

@@ -3,6 +3,7 @@ package com.gav.podcaster.com.gav.rss.model;
 /**
  * Created by Gav on 11/06/15.
  */
+import android.app.Activity;
 import android.os.AsyncTask;
 import android.support.annotation.UiThread;
 import android.util.Xml;
@@ -40,9 +41,9 @@ public class RssFeedParser extends AsyncTask<String, Void, RssFeed>{
     static final String PUB_DATE = "pubDate";
     static final String GUID = "guid";
     String ns = "";
-    private PodcasterActivity activity;
+    private Activity activity;
 
-    public RssFeedParser(PodcasterActivity activity){
+    public RssFeedParser(Activity activity){
         this.activity = activity;
     }
 

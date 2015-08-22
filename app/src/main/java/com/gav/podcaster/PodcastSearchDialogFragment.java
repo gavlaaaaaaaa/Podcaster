@@ -4,6 +4,7 @@ import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.DialogFragment;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -79,8 +80,11 @@ public class PodcastSearchDialogFragment extends DialogFragment {
 
                         //use above to construct api parameter string
                         String apiSearchString = "keywords="+searchString+"&format=opml&sort="+sortString+"&searchsource="+sourceString+contentFilter+"&start=0&results="+numResultsString;
-                        Toast.makeText(getActivity(),apiSearchString,Toast.LENGTH_LONG).show();
-                        System.err.println(apiSearchString);
+
+                        Intent intent = new Intent(getActivity(), SearchResultsActivity.class);
+                        intent.putExtra("apiSearchString", apiSearchString);
+
+                        startActivity(intent);
                     }
                 })
                 //set negative button text and on click listener

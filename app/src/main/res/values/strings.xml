@@ -16,4 +16,7 @@
         <item>Relevance</item>
         <item>Rating</item>
     </string-array>
+    <string name="title_activity_search_results">SearchResultsActivity</string>
+
+    <string name="hello_world">Hello world!</string>
 </resources>

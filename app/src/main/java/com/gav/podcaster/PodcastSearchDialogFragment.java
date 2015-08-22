@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.ArrayAdapter;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
@@ -17,6 +18,9 @@ import android.widget.Toast;
  * Created by Gav on 16/08/15.
  */
 public class PodcastSearchDialogFragment extends DialogFragment {
+
+    private final String[] sortByArray = {"alpha", "hits", "subs", "new", "rel", "rating"};
+    private final String[] sourceArray = {"all", "title"};
 
     @Override
     public Dialog onCreateDialog(Bundle savedInsanceState){
@@ -51,13 +55,32 @@ public class PodcastSearchDialogFragment extends DialogFragment {
                     public void onClick(DialogInterface dialog, int which) {
                         //obtain search string
                         String searchString = ((EditText)dialogFragView.findViewById(R.id.SRCHFRAG_ET_SEARCH))
-                                .getText().toString().replace(" ","%20"); //replace spaces with %20 for url
-                        //TODO: obtain sort by value
-                        //TODO: obtain search source value
-                        //TODO: obtain number of results value
-                        //TODO: obtain filter preferences
-                        //TODO: use above to construct api parameter string
-                        Toast.makeText(getActivity(),searchString,Toast.LENGTH_SHORT).show();
+                                .getText().toString().replace(" ","%20").toLowerCase(); //replace spaces with %20 for url
+
+                        //get position of spinner and use as index for sortByArray
+                        String sortString = sortByArray[((Spinner)dialogFragView.findViewById(R.id.SRCHFRAG_SPIN_SORT)).getSelectedItemPosition()];
+
+                        //get position of spinner and use as index for sourceArray
+                        String sourceString = sourceArray[((Spinner)dialogFragView.findViewById(R.id.SRCHFRAG_SPIN_SOURCE)).getSelectedItemPosition()];
+
+                        //get number of results
+                        String numResultsString = ((EditText)dialogFragView.findViewById(R.id.SRCHFRAG_ET_NUM_RESULTS)).getText().toString();
+
+                        //obtain filter preferences
+                        Boolean noAdult = ((CheckBox)dialogFragView.findViewById(R.id.SRCHFRAG_CHK_ADULT)).isEnabled();
+                        Boolean noExplicit = ((CheckBox)dialogFragView.findViewById(R.id.SRCHFRAG_CHK_EXPLICIT)).isEnabled();
+                        Boolean cleanOnly = ((CheckBox)dialogFragView.findViewById(R.id.SRCHFRAG_CHK_CLEAN)).isEnabled();
+
+                        //construct filter string
+                        String contentFilter="";
+                        if(noAdult) contentFilter = contentFilter + "&contentfilter=noadult";
+                        if(noExplicit) contentFilter = contentFilter + "&contentfilter=noexplicit";
+                        if(cleanOnly) contentFilter = contentFilter + "&contentfilter=clean";
+
+                        //use above to construct api parameter string
+                        String apiSearchString = "keywords="+searchString+"&format=opml&sort="+sortString+"&searchsource="+sourceString+contentFilter+"&start=0&results="+numResultsString;
+                        Toast.makeText(getActivity(),apiSearchString,Toast.LENGTH_LONG).show();
+                        System.err.println(apiSearchString);
                     }
                 })
                 //set negative button text and on click listener

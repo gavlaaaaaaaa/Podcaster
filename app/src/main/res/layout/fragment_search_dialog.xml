@@ -72,6 +72,7 @@
         android:text="Number of Results"/>
 
     <EditText
+        android:id="@+id/SRCHFRAG_ET_NUM_RESULTS"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/SRCHFRAG_TV_SORT"
@@ -103,6 +104,7 @@
         android:layout_below="@+id/SRCHFRAG_TV_FILTERS"/>
 
     <CheckBox
+        android:id="@+id/SRCHFRAG_CHK_EXPLICIT"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="No Explicit Content"
@@ -111,6 +113,7 @@
         android:layout_below="@+id/SRCHFRAG_TV_FILTERS"/>
 
     <CheckBox
+        android:id="@+id/SRCHFRAG_CHK_CLEAN"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Clean Content Only"

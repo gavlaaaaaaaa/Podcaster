@@ -27,6 +27,7 @@ import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.concurrent.ExecutionException;
 
 
 public class RssFeedParser extends AsyncTask<String, Void, RssFeed>{
@@ -99,9 +100,18 @@ public class RssFeedParser extends AsyncTask<String, Void, RssFeed>{
                     }
                     String resultName = parser.getAttributeValue(ns, "text");
                     String resultUrl = parser.getAttributeValue(ns, "url");
-                    result = new RssMessage(resultName, null, resultUrl, null, null,null);
-                    feed.getMessages().add(result);
-                    parser.next();
+                    RssFeedParser getChild = new RssFeedParser(activity);
+                    try {
+                        RssFeed podcast = getChild.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, resultUrl, "true").get();
+                        result = new RssMessage(resultName, null, resultUrl, null, null,podcast.getImage());
+                        feed.getMessages().add(result);
+                        parser.next();
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    } catch (ExecutionException e) {
+                        e.printStackTrace();
+                    }
+
                 }
             }
             else{
@@ -161,6 +171,8 @@ public class RssFeedParser extends AsyncTask<String, Void, RssFeed>{
                 description = readDescription(parser);
             } else if (name.equals("link")) {
                 link = readLink(parser);
+            } else if (name.equals("image")) {
+                image = readImage(parser);
             } else if (name.equals("item")){
                 break;
             } else{
@@ -253,6 +265,20 @@ public class RssFeedParser extends AsyncTask<String, Void, RssFeed>{
 
     }
 
+    private String readImage(XmlPullParser parser) throws IOException, XmlPullParserException {
+        parser.require(XmlPullParser.START_TAG, ns, "image");
+        String name = "";
+        while( !name.equals("url") ) {
+            parser.next();
+            name = parser.getName();
+            if (name == null) name = "";
+        }
+        String image = readText(parser);
+        parser.nextTag();
+        parser.require(XmlPullParser.END_TAG, ns, "image");
+        return image;
+    }
+
     private String readGuid(XmlPullParser parser) throws IOException, XmlPullParserException {
         parser.require(XmlPullParser.START_TAG, ns, "guid");
         String guid = readText(parser);
@@ -272,7 +298,16 @@ public class RssFeedParser extends AsyncTask<String, Void, RssFeed>{
             throw new IllegalStateException();
         }
         String name = parser.getName();
-        if(!name.equals("channel") ||!name.equals("head") || !name.equals("body")){
+        if(name.equals("channel")){
+            return;
+        }
+        else if(name.equals("head")){
+            return;
+        }
+        else if(name.equals("body")){
+            return;
+        }
+        else{
             int depth = 1;
             while (depth != 0) {
                 switch (parser.next()) {

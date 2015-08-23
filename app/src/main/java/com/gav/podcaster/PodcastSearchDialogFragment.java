@@ -68,9 +68,9 @@ public class PodcastSearchDialogFragment extends DialogFragment {
                         String numResultsString = ((EditText)dialogFragView.findViewById(R.id.SRCHFRAG_ET_NUM_RESULTS)).getText().toString();
 
                         //obtain filter preferences
-                        Boolean noAdult = ((CheckBox)dialogFragView.findViewById(R.id.SRCHFRAG_CHK_ADULT)).isEnabled();
-                        Boolean noExplicit = ((CheckBox)dialogFragView.findViewById(R.id.SRCHFRAG_CHK_EXPLICIT)).isEnabled();
-                        Boolean cleanOnly = ((CheckBox)dialogFragView.findViewById(R.id.SRCHFRAG_CHK_CLEAN)).isEnabled();
+                        Boolean noAdult = ((CheckBox)dialogFragView.findViewById(R.id.SRCHFRAG_CHK_ADULT)).isChecked();
+                        Boolean noExplicit = ((CheckBox)dialogFragView.findViewById(R.id.SRCHFRAG_CHK_EXPLICIT)).isChecked();
+                        Boolean cleanOnly = ((CheckBox)dialogFragView.findViewById(R.id.SRCHFRAG_CHK_CLEAN)).isChecked();
 
                         //construct filter string
                         String contentFilter="";
